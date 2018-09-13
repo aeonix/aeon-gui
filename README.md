@@ -128,21 +128,21 @@ The executable can be found in the build/release/bin folder.
 
 3. Install [Aeon](https://github.com/aeonix/aeon) dependencies:
 
-  `brew install boost --c++11`
+  `brew install boost --c++11`   - boost 1.67.0.1
 
-  `brew install openssl` - to install openssl headers
+  `brew install openssl`  - to install openssl headers 1.0.2p
 
-  `brew install pkgconfig`
+  `brew install pkgconfig`   - pkgconfig 0.29.2
 
-  `brew install cmake`
+  `brew install cmake`   - Cmake 3.12.2
 
-  `brew install zeromq`
+  `brew install zeromq`   - ZeroMQ 4.2.5
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
 
 4. Install Qt:
 
-  `brew install qt5`  (or download QT 5.8+ from [qt.io](https://www.qt.io/download-open-source/))
+  `brew install qt`  (or download QT 5.11+ from [qt.io](https://www.qt.io/download-open-source/))
 
   If you have an older version of Qt installed via homebrew, you can force it to use 5.x like so:
   
@@ -154,15 +154,19 @@ The executable can be found in the build/release/bin folder.
 
     This is the directory where Qt 5.x is installed on **your** system
 
-6. Grab an up-to-date copy of the aeon-gui repository
+6. Grab an up-to-date copy of the aeon-gui repository (this may take a while)
 
-  `git clone https://github.com/aeonix/aeon-gui.git`
+  `git clone --recursive https://github.com/aeonix/aeon-gui.git`
 
 7. Go into the repository
 
   `cd aeon-gui`
+  
+8. Update Modules
 
-8. Start the build
+  `git submodule init && git submodule update`
+
+9. Start the build
 
   `./build.sh`
 
