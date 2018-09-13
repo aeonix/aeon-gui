@@ -139,6 +139,8 @@ The executable can be found in the build/release/bin folder.
   `brew install zeromq`   - ZeroMQ 4.2.5
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
+ 
+  *Note*: If you have already installed dependencies in the past, brew can clean up old dependency installs by running the       command  `brew cleanup`. Likewise running `brew cleanup -s` will clean additional build cache from prior builds. 
 
 4. Install Qt:
 
