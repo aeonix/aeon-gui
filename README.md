@@ -143,10 +143,25 @@ The executable can be found in the build/release/bin folder.
   `brew install libusb`   - libusb 1.0.22
   
   `brew install unbound`   - unbound 1.7.3
+  
+  `brew install libunwind-headers`   - libunwind 35.5
+  
+  `brew install xz`   - liblzma 5.2.4 ( was lzma now xz )
+  
+  `brew install ldns`   - ldns 1.7.0.1
+  
+  `brew install pcsc-lite`   - pcsclite 1.8.23
+  
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
  
   *Note*: If you have already installed dependencies in the past, brew can clean up old dependency installs by running the       command  `brew cleanup`. Likewise running `brew cleanup -s` will clean additional build cache from prior builds. 
+
+  *Note*: If brew asks to set file paths for dependencies, add them after installation so pkg-config and compilers can find them. Example : 
+  ```
+  For pkg-config to find pcsc-lite you may need to set:
+  export PKG_CONFIG_PATH="/usr/local/opt/pcsc-lite/lib/pkgconfig"
+  ```
 
 4. Install Qt:
 
