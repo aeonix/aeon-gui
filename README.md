@@ -120,7 +120,7 @@ Packaging for your favorite distribution would be a welcome contribution!
 
 The executable can be found in the build/release/bin folder.
 
-### On OS X:
+### On OS X (High Sierra 10.13.6):
 
 1. Install Xcode from AppStore
 
@@ -139,6 +139,10 @@ The executable can be found in the build/release/bin folder.
   `brew install zeromq`   - ZeroMQ 4.2.5
 
   `brew install libsodium`   - Libsodium 1.0.16
+
+  `brew install libusb`   - libusb 1.0.22
+  
+  `brew install unbound`   - unbound 1.7.3
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
  
@@ -235,3 +239,10 @@ The Aeon GUI on Windows is 64 bits only; 32-bit Windows GUI builds are not offic
     ```
 
 The executable can be found in the `.\release\bin` directory.
+
+
+  ### Debugging a build:
+  
+If you are having issues compiling, run the script get_libwallet_api.sh and look for errors in terminal or cmd prompt. 
+
+
