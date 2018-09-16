@@ -152,7 +152,7 @@ The executable can be found in the build/release/bin folder.
   
   `brew install pcsc-lite`   - pcsclite 1.8.23
   
-  These dependencies can be all installe with one line with : `brew install boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite` or if you want to re-install you can run `brew reinstall boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite`
+  All needed dependencies can be installed with one line with : `brew install gcc boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite miniupnpc readline expat libgtest doxygen graphviz` or if you want to re-install to make sure you have them all you can run `brew reinstall gcc boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite miniupnpc readline expat libgtest doxygen graphviz`
   
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
