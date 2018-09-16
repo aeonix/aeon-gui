@@ -142,7 +142,7 @@ The executable can be found in the build/release/bin folder.
 
   `brew install libusb`   - libusb 1.0.22
   
-  `brew install unbound`   - unbound 1.7.3
+  `brew install unbound`   - unbound 1.7.3. After installing unbound we need to create its folder by adding : `if [ ! -d /usr/local/sbin ]; then sudo mkdir /usr/local/sbin; fi && sudo chmod 777 /usr/local/sbin` . Then we need to make sure everything is linked to unbound with `brew link unbound`. 
   
   `brew install libunwind-headers`   - libunwind 35.5
   
@@ -151,6 +151,8 @@ The executable can be found in the build/release/bin folder.
   `brew install ldns`   - ldns 1.7.0.1
   
   `brew install pcsc-lite`   - pcsclite 1.8.23
+  
+  These dependencies can be all installe with one line with : `brew install boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite` or if you want to re-install you can run `brew reinstall boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite`
   
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
@@ -173,9 +175,11 @@ The executable can be found in the build/release/bin folder.
 
 5. Add the Qt bin directory to your path
 
-    Example: `export PATH=$PATH:$HOME/Qt/5.8/clang_64/bin`
+    Example: `export PATH=$PATH:$HOME/Qt/5.11.1/clang_64/bin`
 
     This is the directory where Qt 5.x is installed on **your** system
+    
+    You can also manually edit the paths file by opening and adding in the extension `/Users/admin/Qt/5.11.1/clang_64/bin`
 
 6. Grab an up-to-date copy of the aeon-gui repository (this may take a while)
 
