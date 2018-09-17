@@ -120,7 +120,7 @@ Packaging for your favorite distribution would be a welcome contribution!
 
 The executable can be found in the build/release/bin folder.
 
-### On OS X:
+### On OS X (High Sierra 10.13.6):
 
 1. Install Xcode from AppStore
 
@@ -128,21 +128,52 @@ The executable can be found in the build/release/bin folder.
 
 3. Install [Aeon](https://github.com/aeonix/aeon) dependencies:
 
-  `brew install boost --c++11`
+  `brew install boost --c++11`   - boost 1.67.0.1
 
-  `brew install openssl` - to install openssl headers
+  `brew install openssl`  - to install openssl headers 1.0.2p
 
-  `brew install pkgconfig`
+  `brew install pkgconfig`   - pkgconfig 0.29.2
 
-  `brew install cmake`
+  `brew install cmake`   - Cmake 3.12.2
 
-  `brew install zeromq`
+  `brew install zeromq`   - ZeroMQ 4.2.5
+
+  `brew install libsodium`   - Libsodium 1.0.16
+
+  `brew install libusb`   - libusb 1.0.22
+  
+  `brew install unbound`   - unbound 1.7.3. After installing unbound we need to create its folder by adding : `if [ ! -d /usr/local/sbin ]; then sudo mkdir /usr/local/sbin; fi && sudo chmod 777 /usr/local/sbin` . Then we need to make sure everything is linked to unbound with `brew link unbound`. 
+  
+  `brew install libunwind-headers`   - libunwind 35.5
+  
+  `brew install xz`   - liblzma 5.2.4 ( was lzma now xz )
+  
+  `brew install ldns`   - ldns 1.7.0.1
+  
+  `brew install pcsc-lite`   - pcsclite 1.8.23
+  
+  All needed dependencies can be installed with one line with :
+  
+  `brew install gcc boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite miniupnpc readline expat libgtest doxygen graphviz`
+  
+  or if you want to re-install to make sure you have them all you can run:
+  
+  `brew reinstall gcc boost --c++11 openssl pkgconfig cmake zeromq libsodium libusb unbound libunwind-headers xz ldns pcsc-lite miniupnpc readline expat libgtest doxygen graphviz`
+  
 
   *Note*: If cmake can not find zmq.hpp file on OS X, installing `zmq.hpp` from https://github.com/zeromq/cppzmq to `/usr/local/include` should fix that error.
+ 
+  *Note*: If you have already installed dependencies in the past, brew can clean up old dependency installs by running the       command  `brew cleanup`. Likewise running `brew cleanup -s` will clean additional build cache from prior builds. 
+
+  *Note*: If brew asks to set file paths for dependencies, add them after installation so pkg-config and compilers can find them. Example : 
+ 
+  For pkg-config to find pcsc-lite you may need to set:
+  
+  `export PKG_CONFIG_PATH="/usr/local/opt/pcsc-lite/lib/pkgconfig" `
 
 4. Install Qt:
 
-  `brew install qt5`  (or download QT 5.8+ from [qt.io](https://www.qt.io/download-open-source/))
+  `brew install qt`  (or download QT 5.11+ from [qt.io](https://www.qt.io/download-open-source/))
 
   If you have an older version of Qt installed via homebrew, you can force it to use 5.x like so:
   
@@ -150,19 +181,25 @@ The executable can be found in the build/release/bin folder.
 
 5. Add the Qt bin directory to your path
 
-    Example: `export PATH=$PATH:$HOME/Qt/5.8/clang_64/bin`
+    Example: `export PATH=$PATH:$HOME/Qt/5.11.1/clang_64/bin`
 
     This is the directory where Qt 5.x is installed on **your** system
+    
+    You can also manually edit the paths file by opening and adding in the extension `/Users/admin/Qt/5.11.1/clang_64/bin`
 
-6. Grab an up-to-date copy of the aeon-gui repository
+6. Grab an up-to-date copy of the aeon-gui repository (this may take a while)
 
-  `git clone https://github.com/aeonix/aeon-gui.git`
+  `git clone --recursive https://github.com/aeonix/aeon-gui.git`
 
 7. Go into the repository
 
   `cd aeon-gui`
+  
+8. Update Modules
 
-8. Start the build
+  `git submodule init && git submodule update`
+
+9. Start the build
 
   `./build.sh`
 
@@ -170,7 +207,7 @@ The executable can be found in the `build/release/bin` folder.
 
 **Note:** Workaround for "ERROR: Xcode not set up properly"
 
-Edit `$HOME/Qt/5.8/clang_64/mkspecs/features/mac/default_pre.prf`
+Edit `$HOME/Qt/5.11.1/clang_64/mkspecs/features/mac/default_pre.prf`
 
 replace
 `isEmpty($$list($$system("/usr/bin/xcrun -find xcrun 2>/dev/null")))`
@@ -227,3 +264,10 @@ The Aeon GUI on Windows is 64 bits only; 32-bit Windows GUI builds are not offic
     ```
 
 The executable can be found in the `.\release\bin` directory.
+
+
+  ### Debugging a build:
+  
+If you are having issues compiling, run the script get_libwallet_api.sh and look for errors in terminal or cmd prompt. 
+
+
