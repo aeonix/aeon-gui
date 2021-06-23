@@ -99,6 +99,7 @@
         <file>wizard/WizardPasswordInput.qml</file>
         <file>lang/languages.xml</file>
         <file>lang/flags/bd.png</file>
+        <file>lang/flags/bg.png</file>
         <file>lang/flags/br.png</file>
         <file>lang/flags/catalonia.png</file>
         <file>lang/flags/cn.png</file>
@@ -189,6 +190,7 @@
         <file>components/InlineButton.qml</file>
         <file>images/lightning.png</file>
         <file>images/leftPanelBg.jpg</file>
+        <file>images/logout.png</file>
         <file>images/aeonIcon-28x28.png</file>
         <file>images/lightning-white.png</file>
         <file>images/middlePanelBg.jpg</file>

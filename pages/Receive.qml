@@ -65,6 +65,8 @@ Rectangle {
     }
 
     function update() {
+        const max_tracking = 3;
+
         if (!appWindow.currentWallet || !trackingEnabled.checked) {
             trackingLineText.text = "";
             trackingModel.clear();
@@ -80,10 +82,10 @@ Rectangle {
         var count = model.rowCount()
         var totalAmount = 0
         var nTransactions = 0
-        var blockchainHeight = 0
+        var blockchainHeight = null
         var txs = []
 
-        for (var i = 0; i < count; ++i) {
+        for (var i = 0; i < count && txs.length < max_tracking; ++i) {
             var idx = model.index(i, 0)
             var isout = model.data(idx, TransactionHistoryModel.TransactionIsOutRole);
             var subaddrAccount = model.data(idx, TransactionHistoryModel.TransactionSubaddrAccountRole);
@@ -103,8 +105,8 @@ Rectangle {
                 if (blockHeight == 0) {
                     in_txpool = true;
                 } else {
-                    if (blockchainHeight == 0)
-                        blockchainHeight = walletManager.blockchainHeight()
+                    if (blockchainHeight == null)
+                        blockchainHeight = appWindow.currentWallet.blockChainHeight()
                     confirmations = blockchainHeight - blockHeight - 1
                     displayAmount = model.data(idx, TransactionHistoryModel.TransactionDisplayAmountRole);
                 }
@@ -130,7 +132,6 @@ Rectangle {
             trackingLineText.text = qsTr("%1 transactions found").arg(nTransactions) + ":" + translationManager.emptyString
         }
 
-        var max_tracking = 3;
         toReceiveSatisfiedLine.text = "";
         var expectedAmount = walletManager.amountFromString(amountToReceiveLine.text)
         if (expectedAmount && expectedAmount != amount) {
@@ -143,11 +144,6 @@ Rectangle {
         }
 
         trackingModel.clear();
-
-        if (txs.length > 3) {
-            txs.length = 3;
-        }
-
         txs.forEach(function(tx){
             trackingModel.append({
                 "amount": tx.amount,
@@ -447,7 +443,7 @@ Rectangle {
 
                     Layout.fillWidth: true
                     Layout.minimumWidth: 200
-                    Layout.maximumWidth: mainLayout.qrCodeSize
+                    spacing: parent.spacing
 
                     LineEdit {
                         id: amountToReceiveLine
@@ -460,44 +456,54 @@ Rectangle {
                             regExp: /(\d{1,8})([.]\d{1,12})?$/
                         }
                     }
-                }
 
-                Rectangle {
-                    color: "white"
-                    Layout.topMargin: parent.spacing - 4
-                    Layout.fillWidth: true
-                    Layout.maximumWidth: mainLayout.qrCodeSize
-                    Layout.preferredHeight: width
-                    radius: 4
+                    Rectangle {
+                        color: "white"
 
-                    Image {
-                        id: qrCode
-                        anchors.fill: parent
-                        anchors.margins: 1
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: mainLayout.qrCodeSize
+                        Layout.preferredHeight: width
+                        radius: 4
 
-                        smooth: false
-                        fillMode: Image.PreserveAspectFit
-                        source: "image://qrcode/" + makeQRCodeString()
-                        MouseArea {
+                        Image {
+                            id: qrCode
                             anchors.fill: parent
-                            acceptedButtons: Qt.RightButton
-                            onClicked: {
-                                if (mouse.button == Qt.RightButton)
-                                    qrMenu.open()
+                            anchors.margins: 1
+
+                            smooth: false
+                            fillMode: Image.PreserveAspectFit
+                            source: "image://qrcode/" + makeQRCodeString()
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.RightButton
+                                onClicked: {
+                                    if (mouse.button == Qt.RightButton)
+                                        qrMenu.open()
+                                }
+                                onPressAndHold: qrFileDialog.open()
                             }
-                            onPressAndHold: qrFileDialog.open()
+                        }
+
+                        Menu {
+                            id: qrMenu
+                            title: "QrCode"
+                            y: parent.height / 2
+
+                            MenuItem {
+                                text: qsTr("Save As") + translationManager.emptyString;
+                                onTriggered: qrFileDialog.open()
+                            }
                         }
                     }
 
-                    Menu {
-                        id: qrMenu
-                        title: "QrCode"
-                        y: parent.height / 2
-
-                        MenuItem {
-                           text: qsTr("Save As") + translationManager.emptyString;
-                           onTriggered: qrFileDialog.open()
-                        }
+                    LineEdit {
+                        id: paymentUrl
+                        Layout.fillWidth: true
+                        labelText: qsTr("Payment URL") + translationManager.emptyString
+                        text: makeQRCodeString()
+                        onTextUpdated: function() { paymentUrl.cursorPosition = 0; }
+                        readOnly: true
+                        copyButton: true
                     }
                 }
             }

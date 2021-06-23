@@ -144,9 +144,14 @@ Rectangle {
                       fontBold: true
                       inlineButtonText: qsTr("All") + translationManager.emptyString
                       inlineButton.onClicked: amountLine.text = "(all)"
+                      onTextChanged: {
+                          if (amountLine.text.startsWith('.')) {
+                              amountLine.text = '0' + amountLine.text;
+                          }
+                      }
 
                       validator: RegExpValidator {
-                          regExp: /(.|)(\d{1,8})([.]\d{1,12})?$/
+                          regExp: /^(\d{1,8})?([\.]\d{1,12})?$/
                       }
                   }
               }
